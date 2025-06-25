@@ -54,8 +54,10 @@ export default function FeaturedProducts({ category, currency }) {
           pagination={{ clickable: true }}
           modules={[Navigation]}
           navigation={{
-            prevEl: ".snbp8",
-            nextEl: ".snbn8",
+            prevEl: ".snbn8",
+            nextEl: ".snbp8",
+            // prevEl: ".snbp8",
+            // nextEl: ".snbn8",
           }}
           breakpoints={{
             // when window width is >= 320px

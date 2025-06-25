@@ -12,7 +12,7 @@ export default function BacktoTop() {
     const handleScroll = () => {
       // Check if scrolled more than page height
       if (window.scrollY > 100) {
-        setIsVisible(true);
+        setIsVisible(false);
       } else {
         setIsVisible(false);
       }
