@@ -10,8 +10,8 @@
   font-weight: 400;
 }
 .space_between label {
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 16px !important;
+  font-weight: 400 !important;
 }
 .small_form .input_div {
   max-height: 25px !important;

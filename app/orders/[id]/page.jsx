@@ -257,10 +257,12 @@ export default function InvoicePage() {
                           <td>
                             {/* <span>{currency?.sign}{item?.price}</span> */}
                             <span>
+                              
+                            {currency?.sign}
                               {Number(item?.price).toLocaleString("de-DE", {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2,
-                              })} {currency?.sign}
+                              })}
                             </span>
 
                           </td>
@@ -272,10 +274,11 @@ export default function InvoicePage() {
                           </td>
                           <td>
                             <span>
+                            {currency?.sign}
                               {(Number(item?.price) * 0.22).toLocaleString("de-DE", {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2,
-                              })} {currency?.sign}
+                              })} 
                             </span>
                           </td>
                         </tr>
@@ -288,7 +291,7 @@ export default function InvoicePage() {
 
           <section className=" px-2">
             <div className="d-flex flex-wrape gap-1">
-              <div style={{ width: "15%" }}>
+              {/* <div style={{ width: "15%" }}>
                 <p>Shipping</p>
                 <h6
                   className="p-1 w-100"
@@ -296,7 +299,7 @@ export default function InvoicePage() {
                 >
                   €0.00
                 </h6>
-              </div>
+              </div> */}
               {/* <div style={{ width: "15%" }}>
                                 <p>Payment Fees</p>
                                 <h6 className='p-1 w-100' style={{ backgroundColor: "#f2f2f2" }}>€0.00</h6>
@@ -335,8 +338,17 @@ export default function InvoicePage() {
                   })}
                 </h6>
               </div>
+              <div style={{ width: "15%" }}>
+                <p>VAT</p>
+                <h6
+                  className="p-1 w-100"
+                  style={{ backgroundColor: "#f2f2f2" }}
+                >
+                  €0.00
+                </h6>
+              </div>
             </div>
-            <div className="d-flex gap-1 justify-end me-4">
+            {/* <div className="d-flex gap-1 justify-end me-4">
               <div style={{ width: "15%" }}>
                 <p>VAT</p>
                 <h6
@@ -355,29 +367,9 @@ export default function InvoicePage() {
                   €0.00
                 </h6>
               </div>
-            </div>
-          </section>
-
-          <section className=" px-2 pb-2">
-            <p className="note">
-              In case of non-compliance with the payment terms stated on the
-              invoice, interest will be charged pursuant to Legislative Decree
-              231/02. Terms of Service: any claims relating to this invoice and
-              its related service must be received within 8 days of delivery.
-            </p>
-            <div style={{ width: "100%" }}>
-              <p>Order Ref</p>
-              <h6 className="p-1 w-100" style={{ backgroundColor: "#f2f2f2" }}>
-                {orderDetails?.number}
-              </h6>
-            </div>
-            {/* <div style={{ width: "100%" }}>
-              <p>Reason for Transport</p>
-              <h6 className="p-1 w-100" style={{ backgroundColor: "#f2f2f2" }}>
-                Sale
-              </h6>
             </div> */}
           </section>
+
         </div>
       )}
     </div>

@@ -114,14 +114,14 @@ export default function FeaturedProducts({ category, currency }) {
                       <div className="prices">
                         <div className="new_price">
                           <p>
-                            {currency?.sign}
+                            {/* {currency?.sign} */}
                             {elm?.current_price}
                           </p>
                         </div>
                         <div className="old_price">
                           <p className="text-muted">
                             <del>
-                              {currency?.sign}
+                              {/* {currency?.sign} */}
                               {elm?.previous_price}
                             </del>
                           </p>

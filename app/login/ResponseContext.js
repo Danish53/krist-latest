@@ -34,8 +34,8 @@ export const ResponseProvider = ({ children }) => {
         // If same id + color + size exists → increase quantity
         return prevCart.map((item) =>
           item.id === product.id &&
-          item.color === product.color &&
-          item.size === product.size
+            item.color === product.color &&
+            item.size === product.size
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
@@ -344,7 +344,12 @@ export const ResponseProvider = ({ children }) => {
         discount = price;
       } else if (type === 0) {
         // Percentage discount
-        discount = (subtotal * price) / 100;
+        {
+          ((subtotal * price) / 100).toLocaleString('de-DE', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        }
       }
 
       setCouponCode(coupon);
@@ -424,7 +429,7 @@ export const ResponseProvider = ({ children }) => {
   const Currency = async () => {
     try {
       const response = await fetch(
-        `${baseUrl}api/front/system-currency`, 
+        `${baseUrl}api/front/system-currency`,
         {
           method: "GET",
           headers: {

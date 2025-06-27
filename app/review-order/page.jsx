@@ -28,6 +28,7 @@ export default function ReviewOrder() {
     discountAmount,
     response_Context,
   } = useContext(ResponseContext);
+  console.log(discountAmount, "discountamounttt")
 
   console.log("cart isssss from review order..", cart);
   const router = useRouter();
@@ -82,6 +83,10 @@ export default function ReviewOrder() {
   const subtotal = parseFloat(getTotalAmount());
   const deliveryFee = Number(setting?.shipping_cost || 0);
   const grandTotal = subtotal - discountAmount + subtotal * 0.22 + deliveryFee;
+  console.log(subtotal, "toatl subtotal");
+  console.log(discountAmount, "toatl discount");
+  console.log(deliveryFee, "toatl deliv");
+  console.log(grandTotal, "toatl grand");
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -335,7 +340,7 @@ export default function ReviewOrder() {
         router.push(data.data);
       } else {
         console.log("Error while the data fetched");
-        toast.error(data?.error?.message || "error");
+        toast.error(data?.errors || "error");
       }
     } catch (err) {
       console.log("Something went wrong during checkout.");
@@ -360,7 +365,7 @@ export default function ReviewOrder() {
     router.back();
   };
 
-  console.log("form data checkout after Question", formDataCheckout?.address);
+  // console.log("form data checkout after Question", formDataCheckout?.address);
 
   return (
     <div>

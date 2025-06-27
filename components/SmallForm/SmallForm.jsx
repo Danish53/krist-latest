@@ -142,10 +142,7 @@ export default function SmallForm() {
             {discountAmount > 0 && (
               <span style={{ textDecoration: "line-through" }}>
                 {currency?.sign}
-                {Number(discountAmount).toLocaleString('de-DE', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
+                {discountAmount}
               </span>
             )}
             <span id="subtotal">
