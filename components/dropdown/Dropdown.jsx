@@ -61,7 +61,7 @@ export default function Dropdown() {
   // ✅ Initialize from searchParams
   useEffect(() => {
     const categoryParam =
-      searchParams.get("category") || searchParams.get("category_name");
+      searchParams.get("category_name") || searchParams.get("category_name");
     const color = searchParams.get("color") || "";
     const size = searchParams.get("size") || "S";
     const min_price = parseInt(searchParams.get("min_price") || "20");

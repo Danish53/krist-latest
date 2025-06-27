@@ -22,7 +22,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 export default function ShopDetails1() {
   const { cart, addToCart, updateCart, currency } = useContext(ResponseContext);
   const [data, setData] = useState(null);
-  console.log(data, "data single pro..");
+  // console.log(data, "data single pro..");
   // console.log(data.stock, "stock length");
 
   const [loading, setLoading] = useState(false);
@@ -193,12 +193,20 @@ export default function ShopDetails1() {
                 <div className="hstack justify-between items-center gap-2">
                   <div className="product-price hstack gap-1 fs-5 xl:fs-4">
                     <span className="price">
-                      {currency?.sign}
-                      {data?.current_price}
+                      {/* {currency?.sign} */}
+                      {/* {data?.current_price} */}
+                      {data?.current_price?.toLocaleString("de-DE", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                     </span>
                     <span className="price-old text-line-through opacity-40">
-                      {currency?.sign}
-                      {data?.previous_price}
+                      {/* {currency?.sign} */}
+                      {/* {data?.previous_price} */}
+                      {data?.previous_price?.toLocaleString("de-DE", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                     </span>
                   </div>
                 </div>

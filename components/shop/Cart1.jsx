@@ -17,13 +17,31 @@ export default function Cart1() {
 
   console.log(cart, "chekout response and pass api...");
 
+  // const getTotalAmount = () => {
+  //   return (
+  //     cart
+  //       ?.reduce((total, item) => total + parseFloat(item?.current_price.replace(/[^0-9.]/g, '')) * item.quantity, 0) || "0.00"
+  //   );
+  // };
+
   const getTotalAmount = () => {
-    return (
-      cart
-        ?.reduce((total, item) => total + item.current_price * item.quantity, 0)
-        .toFixed(2) || "0.00"
-    );
+    const total = cart?.reduce((sum, item) => {
+      const cleanedPrice = item?.current_price
+        ?.replace(/[^\d,.-]/g, '')  // Remove everything except digits, comma, dot, minus (removes €)
+        ?.replace(/\./g, '')        // Remove thousand separators
+        ?.replace(',', '.');        // Convert comma decimal to dot for JS
+
+      const price = parseFloat(cleanedPrice);
+
+      return sum + (isNaN(price) ? 0 : price * item.quantity);
+    }, 0);
+
+    return total?.toLocaleString('de-DE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }) || "0,00";
   };
+
 
   const updateCartQuantity = (id, newQuantity) => {
     if (newQuantity < 1 || newQuantity > 99) return;
@@ -112,7 +130,7 @@ export default function Cart1() {
                                   className="position-cover"
                                   data-caption="Laptop Cover"
                                 ></Link>
-                                <div className="title_size ">
+                                <div className="title_size">
                                   <h5 className="title h6 m-0">
                                     <Link
                                       href={`/shop-product-detail/${elm.id}`}
@@ -123,8 +141,8 @@ export default function Cart1() {
                                     </Link>
                                   </h5>
                                   {elm?.size && elm?.size.length > 0 && (
-                                    <p className="sizes">
-                                      Size:{" "}
+                                    <p className="sizes m-0 p-0 d-flex gap-1" style={{ justifyContent: "center", alignItems: "baseline", height: "25px" }}>
+                                      <h5 className="title h6">Size:</h5>
                                       {Array.isArray(elm.size)
                                         ? elm.size[0]
                                         : elm.size}
@@ -132,11 +150,26 @@ export default function Cart1() {
                                   )}
 
                                   {elm?.color && elm?.color.length > 0 && (
-                                    <p className="sizes">
-                                      Color:{" "}
-                                      {Array.isArray(elm.color)
-                                        ? elm.color[0]
-                                        : elm.color}
+                                    <p className="sizes m-0 p-0 d-flex gap-1" style={{ alignItems: "baseline", height: "25px" }}>
+                                      <h5 className="title h6">Color:</h5>
+                                      {(() => {
+                                        const colorCode = Array.isArray(elm.color) ? elm.color[0] : elm.color;
+                                        return (
+                                          <span
+                                            style={{
+                                              // display: "inline-block",
+                                              width: "20px",
+                                              height: "20px",
+                                              backgroundColor: colorCode,
+                                              paddingTop: "5px",
+                                              // border: `1px solid colorCode,
+                                              borderRadius: "4px",
+                                            }}
+                                            title={colorCode}
+                                          />
+                                        );
+                                      })()}
+
                                     </p>
                                   )}
                                 </div>
@@ -144,8 +177,12 @@ export default function Cart1() {
                             </td>
                             <td>
                               <span className="price">
-                                {currency?.sign}
-                                {elm?.current_price}
+                                {/* {currency?.sign} */}
+                                {/* {elm?.current_price} */}
+                                {elm?.current_price?.toLocaleString("de-DE", {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
                               </span>
                             </td>
                             <td>
@@ -170,7 +207,21 @@ export default function Cart1() {
                             <td>
                               <span className="subtotal">
                                 {currency?.sign}
-                                {elm?.quantity * elm?.current_price}
+                                {/* {elm?.quantity * elm?.current_price} */}
+                                {/* {elm?.quantity * parseFloat(elm?.current_price.replace(/[^0-9.]/g, ''))} */}
+                                {(
+                                  elm?.quantity *
+                                  parseFloat(
+                                    elm?.current_price
+                                      ?.replace(/[^\d,.-]/g, '')   // remove all except digits, comma, dot, minus
+                                      ?.replace(/\./g, '')         // remove thousand separators
+                                      ?.replace(',', '.')          // convert German decimal to JS decimal
+                                  )
+                                )?.toLocaleString('de-DE', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+
                               </span>
                             </td>
                             <td>
@@ -205,42 +256,84 @@ export default function Cart1() {
                       <th className="ft-tertiary text-black font_family">
                         <span className="font_family">Subtotal</span>
                       </th>
-                      <td className="text_align_right">
-                        {currency?.sign}
-                        {subtotal}
-                      </td>
+                      <th className="text_align_right text-black font_family">
+                        <span className="font_family">{currency?.sign}
+                          {subtotal}
+
+                        </span>
+                      </th>
                     </tr>
 
                     <tr className="sub_total border_bottom">
                       <th className="ft-tertiary text-black font_family">
                         <span className="font_family">VAT 22%</span>
                       </th>
-                      <td className="text_align_right">
+                      <th className="text_align_right text-black font_family">
                         {currency?.sign}
-                        {(subtotal * 0.22).toFixed(2)}
-                      </td>
+                        {/* {(subtotal * 0.22).toFixed(2)} */}
+                        {(() => {
+                          const subtotal = getTotalAmount();  // German format
+                          const vatRate = 22 / 100;     // = 0.22
+
+                          const cleanedSubtotal = subtotal
+                            .replace(/\./g, '')         // "1.903,87" → "1903,87"
+                            .replace(',', '.');         // → "1903.87"
+
+                          const subtotalNum = parseFloat(cleanedSubtotal);
+                          const vatAmount = subtotalNum * vatRate;
+
+                          return vatAmount.toLocaleString('de-DE', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                          });
+                        })()}
+
+                      </th>
                     </tr>
                     <tr className="sub_total border_bottom">
                       <th className="ft-tertiary text-black font_family">
                         <span className="font_family">Delivery Charges</span>
                       </th>
-                      <td className="text_align_right">
+                      <th className="text_align_right text-black font_family">
                         {currency?.sign}
                         {deliveryFee}
-                      </td>
+                      </th>
                     </tr>
                     <tr className="sub_total border_bottom">
                       <th className="ft-tertiary text-black font_family">
                         <span className="font_family">Grand Total</span>
                       </th>
-                      <td className="text_align_right">
+                      <th className="text_align_right text-black font_family">
                         {currency?.sign}
-                        {(
-                          Number(deliveryFee) +
-                          subtotal * 0.22 +
-                          Number(grandtotalPrice)
-                        ).toFixed(2)}
-                      </td>
+                        {(() => {
+                          // Clean subtotal
+                          const cleanedSubtotal = typeof subtotal === 'string'
+                            ? subtotal.replace(/\./g, '').replace(',', '.')
+                            : subtotal;
+
+                          const subtotalNum = parseFloat(cleanedSubtotal);
+
+                          // Clean grand total (if it comes in German format)
+                          const cleanedGrand = typeof grandtotalPrice === 'string'
+                            ? grandtotalPrice.replace(/\./g, '').replace(',', '.')
+                            : grandtotalPrice;
+
+                          const grandTotalNum = parseFloat(cleanedGrand);
+                          const delivery = Number(deliveryFee);
+                          const vat = subtotalNum * 0.22;
+
+                          const total = delivery + vat + grandTotalNum;
+
+                          return isNaN(total)
+                            ? "0,00"
+                            : total.toLocaleString('de-DE', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            });
+                        })()}
+
+
+                      </th>
                     </tr>
 
                     <tr className="tr_row ft-tertiary">

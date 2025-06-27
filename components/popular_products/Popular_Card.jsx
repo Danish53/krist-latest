@@ -63,7 +63,10 @@ export default function Popular_Card({ img_src, productName, price, rating, prod
 
             <div className="price_div">
               <p>
-                <strong>{currency?.sign}{price}</strong>
+                <strong>{price?.toLocaleString("de-DE", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}</strong>
               </p>
             </div>
           </div>

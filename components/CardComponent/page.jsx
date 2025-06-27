@@ -30,18 +30,26 @@ export default function Page() {
   const getTotalAmount = () => {
     const total =
       cart?.reduce((sum, item) => {
-        let s = item.current_price.replace(/[^\d.,-]+/g, ""); //
-        if (s.slice(-3).includes(",")) {
-          s = s.replace(/\./g, "").replace(/,/, ".");
+        // Remove unwanted characters, keep digits, comma, dot, minus
+        let s = item.current_price.replace(/[^\d.,-]/g, "");
+
+        // Convert German format "1.234,56" to JS float "1234.56"
+        if (s.includes(",")) {
+          s = s.replace(/\./g, "").replace(",", ".");
         } else {
           s = s.replace(/,/g, "");
         }
+
         const price = parseFloat(s);
         return sum + (isNaN(price) ? 0 : price * item.quantity);
       }, 0) || 0;
 
-    return total.toFixed(2); // "1234.56"
+    return total.toLocaleString("de-DE", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   };
+
 
   return (
     <div>
@@ -77,7 +85,10 @@ export default function Page() {
                     </p>
                     <p className="prod_title p-0 m-0">
                       {/* Price: {currency?.sign} */}
-                      Price:{item?.current_price}
+                      Price:{item?.current_price?.toLocaleString("de-DE", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
                       {/* {Number(item?.current_price || 0).toFixed(2)} */}
                     </p>
                     <div className="delete_div">
@@ -92,11 +103,25 @@ export default function Page() {
                         )}
 
                         {item?.color && item?.color.length > 0 && (
-                          <p className="sizes">
+                          <p className="sizes m-0 p-0 d-flex gap-1" style={{alignItems:"baseline"}}>
                             Color:{" "}
-                            {Array.isArray(item.color)
-                              ? item.color[0]
-                              : item.color}
+                            {(() => {
+                              const colorCode = Array.isArray(item.color) ? item.color[0] : item.color;
+                              return (
+                                <span
+                                  style={{
+                                    // display: "inline-block",
+                                    width: "20px",
+                                    height: "20px",
+                                    backgroundColor: colorCode,
+                                    paddingTop: "5px",
+                                    // border: `1px solid colorCode,
+                                    borderRadius: "4px",
+                                  }}
+                                  title={colorCode}
+                                />
+                              );
+                            })()}
                           </p>
                         )}
                       </div>

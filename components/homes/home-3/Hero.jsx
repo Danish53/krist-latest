@@ -94,71 +94,31 @@ export default function Hero() {
       <Slider ref={sliderRef} {...settings}>
         {loading
           ? Array(3)
-              .fill({})
-              .map((_, index) => (
-                <section key={index} id="hero_sec" className="hero_sec">
-                  <div className="container">
-                    <div className="row y-center">
-                      <div className="col-lg-6 content">
-                        <h1>
-                          <Skeleton width={400} height={30} />
-                        </h1>
-                        <h3>
-                          <Skeleton width={300} height={20} />
-                        </h3>
-                        <div className="tick_sec_parent">
-                          <div className="tick_single">
-                            <p>
-                              <Skeleton width={100} height={20} />
-                            </p>
-                          </div>
-                        </div>
-                        <div className="mt-3">
-                          <div className="icon_cart_div"></div>
-                          <div className="cart_text">
-                            <p>
-                              <Skeleton width={130} height={30} />
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div
-                        className="col-lg-6 img_div"
-                        style={{ position: "relative" }}
-                      >
-                        <Skeleton
-                          height={400}
-                          width={"100%"}
-                          style={{ borderRadius: "10px" }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              ))
-          : products?.map((item, index) => (
+            .fill({})
+            .map((_, index) => (
               <section key={index} id="hero_sec" className="hero_sec">
                 <div className="container">
                   <div className="row y-center">
                     <div className="col-lg-6 content">
-                      <h1>{truncateText(item?.title, 50)}</h1>
-                      <h3>{item?.category_name}</h3>
+                      <h1>
+                        <Skeleton width={400} height={30} />
+                      </h1>
+                      <h3>
+                        <Skeleton width={300} height={20} />
+                      </h3>
                       <div className="tick_sec_parent">
                         <div className="tick_single">
-                          <MdOutlineDone className="icon_size" />
-                          <p>{item?.current_price}</p>
+                          <p>
+                            <Skeleton width={100} height={20} />
+                          </p>
                         </div>
                       </div>
-                      <div
-                        className="add_to_cart_div mt-3"
-                        onClick={() => addToCart(item)}
-                      >
-                        <div className="icon_cart_div">
-                          <BsCart2 className="icon_size" />
-                        </div>
+                      <div className="mt-3">
+                        <div className="icon_cart_div"></div>
                         <div className="cart_text">
-                          <p>Add to cart</p>
+                          <p>
+                            <Skeleton width={130} height={30} />
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -167,24 +127,68 @@ export default function Hero() {
                       className="col-lg-6 img_div"
                       style={{ position: "relative" }}
                     >
-                      <img
-                        src={
-                          item?.thumbnail ||
-                          "https://img.freepik.com/free-psd/brown-waffle-knit-sweater-wooden-hanger-autumn-winter-fashion-apparel-cozy-comfortable-clothing-style_632498-31381.jpg"
-                        }
-                        alt="Product"
-                        style={{
-                          height: "400px",
-                          width: "100%",
-                          objectFit: "cover",
-                          borderRadius: "10px",
-                        }}
+                      <Skeleton
+                        height={400}
+                        width={"100%"}
+                        style={{ borderRadius: "10px" }}
                       />
                     </div>
                   </div>
                 </div>
               </section>
-            ))}
+            ))
+          : products?.map((item, index) => (
+            <section key={index} id="hero_sec" className="hero_sec">
+              <div className="container">
+                <div className="row y-center">
+                  <div className="col-lg-6 content">
+                    <h1>{truncateText(item?.title, 50)}</h1>
+                    <h3>{item?.category_name}</h3>
+                    <div className="tick_sec_parent">
+                      <div className="tick_single">
+                        <MdOutlineDone className="icon_size" />
+                        {/* <p>{item?.current_price}</p> */}
+                        <p>{item?.current_price?.toLocaleString("de-DE", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}</p>
+                      </div>
+                    </div>
+                    <div
+                      className="add_to_cart_div mt-3"
+                      onClick={() => addToCart(item)}
+                    >
+                      <div className="icon_cart_div">
+                        <BsCart2 className="icon_size" />
+                      </div>
+                      <div className="cart_text">
+                        <p>Add to cart</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className="col-lg-6 img_div"
+                    style={{ position: "relative" }}
+                  >
+                    <img
+                      src={
+                        item?.thumbnail ||
+                        "https://img.freepik.com/free-psd/brown-waffle-knit-sweater-wooden-hanger-autumn-winter-fashion-apparel-cozy-comfortable-clothing-style_632498-31381.jpg"
+                      }
+                      alt="Product"
+                      style={{
+                        height: "400px",
+                        width: "100%",
+                        objectFit: "cover",
+                        borderRadius: "10px",
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+          ))}
       </Slider>
 
       {/* Right Button */}

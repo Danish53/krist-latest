@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import html2pdf from "html2pdf.js";
 import "./invoice.css";
 import { useParams } from "next/navigation";
+import { ResponseContext } from "@/app/login/ResponseContext";
 
 export default function InvoicePage() {
   const invoiceRef = useRef();
@@ -10,6 +11,13 @@ export default function InvoicePage() {
   const generatePDF = () => {
     html2pdf().from(invoiceRef.current).save();
   };
+
+  const {
+    currency,
+    discountAmount,
+    cart,
+    setting
+  } = useContext(ResponseContext);
 
   const { id } = useParams();
 
@@ -38,6 +46,28 @@ export default function InvoicePage() {
 
     fetchOrderDetails();
   }, [id]);
+
+  const getTotalAmount = () => {
+    return (
+      cart?.reduce((total, item) => {
+        let priceStr = item.current_price.replace(/[^\d.,-]+/g, "");
+
+        if (priceStr.slice(-3).includes(",")) {
+          priceStr = priceStr.replace(/\./g, "").replace(",", ".");
+        } else {
+          priceStr = priceStr.replace(/,/g, "");
+        }
+
+        const price = parseFloat(priceStr);
+        return total + (isNaN(price) ? 0 : price * item.quantity);
+      }, 0) || 0
+    ).toFixed(2);
+  };
+
+
+  const subtotal = getTotalAmount();
+  const deliveryFee = Number(setting?.shipping_cost || 0);
+  const grandTotal = subtotal - discountAmount + deliveryFee;
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -90,13 +120,16 @@ export default function InvoicePage() {
           </section>
 
           <section className="company-info px-2">
-            <div>
-              <h6>Recipient Company:</h6>
-              <p>
-                Tavella Ivo Viale Einaudi 8 <br /> 15011 Acqui Terme
-                (Alessandria)
-              </p>
-            </div>
+            {
+              setting?.company_address && (
+                <div>
+                  <h6>Recipient Company:</h6>
+                  <p>
+                    {setting?.company_address}
+                  </p>
+                </div>
+              )
+            }
 
             <div>
               <p>Email</p>
@@ -104,24 +137,29 @@ export default function InvoicePage() {
                 {orderDetails?.customer_email}
               </h6>
               <div className="d-flex gap-1">
-                <div>
-                  <p>Tax Code</p>
-                  <h6
-                    className="p-1 w-100"
-                    style={{ backgroundColor: "#f2f2f2" }}
-                  >
-                    TVLVIO67R23F965V
-                  </h6>
-                </div>
-                <div>
-                  <p>VAT Number</p>
-                  <h6
-                    className="p-1 w-100"
-                    style={{ backgroundColor: "#f2f2f2" }}
-                  >
-                    02228570061
-                  </h6>
-                </div>
+                {orderDetails?.customer_type === "1" ? (
+                  <>
+                    <div>
+                      <p>Company Name</p>
+                      <h6 className="p-1 w-100" style={{ backgroundColor: "#f2f2f2" }}>
+                        {orderDetails?.company_name}
+                      </h6>
+                    </div>
+                    <div>
+                      <p>VAT Number</p>
+                      <h6 className="p-1 w-100" style={{ backgroundColor: "#f2f2f2" }}>
+                        {orderDetails?.vat_number}
+                      </h6>
+                    </div>
+                  </>
+                ) : (
+                  <div>
+                    <p>Tax Code</p>
+                    <h6 className="p-1 w-100" style={{ backgroundColor: "#f2f2f2" }}>
+                      {orderDetails?.tax_code}
+                    </h6>
+                  </div>
+                )}
               </div>
             </div>
           </section>
@@ -217,7 +255,14 @@ export default function InvoicePage() {
                             <span>{item?.qty}</span>
                           </td>
                           <td>
-                            <span>{item?.price}</span>
+                            {/* <span>{currency?.sign}{item?.price}</span> */}
+                            <span>
+                              {Number(item?.price).toLocaleString("de-DE", {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })} {currency?.sign}
+                            </span>
+
                           </td>
                           <td>
                             <span>{item?.discount}</span>
@@ -226,7 +271,12 @@ export default function InvoicePage() {
                             <span>22%</span>
                           </td>
                           <td>
-                            <span>€112.81</span>
+                            <span>
+                              {(Number(item?.price) * 0.22).toLocaleString("de-DE", {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })} {currency?.sign}
+                            </span>
                           </td>
                         </tr>
                       );
@@ -279,7 +329,10 @@ export default function InvoicePage() {
                   className="p-1 w-100"
                   style={{ backgroundColor: "#f2f2f2" }}
                 >
-                  €0.00
+                  {(Number(subtotal * 0.22) + Number(grandTotal)).toLocaleString('de-DE', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                 </h6>
               </div>
             </div>

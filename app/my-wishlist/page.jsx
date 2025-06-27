@@ -50,11 +50,11 @@ export default function page() {
                       <p id="color_gray">{item?.category_name}</p>
                       <div className="price_div">
                         <p id="newPrice">
-                          {currency?.sign}
+                          {/* {currency?.sign} */}
                           {item?.current_price}
                         </p>
                         <p id="old_Price">
-                          {currency?.sign}
+                          {/* {currency?.sign} */}
                           {item?.previous_price}
                         </p>
                       </div>

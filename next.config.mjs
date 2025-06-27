@@ -11,9 +11,13 @@ const nextConfig = {
         protocol: "https",
         hostname: "via.placeholder.com",
       },
+      // {
+      //   protocol: "https",
+      //   hostname: "assets.led-italia.it",
+      // },
       {
         protocol: "https",
-        hostname: "assets.led-italia.it",
+        hostname: "foundation.techifort.com",
       },
       {
         protocol: "https",

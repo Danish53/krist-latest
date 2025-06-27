@@ -98,10 +98,26 @@ export default function SmallForm() {
                   )}
 
                   {item?.color && item?.color.length > 0 && (
-                    <p className="sizes">
-                      Color:{" "}
-                      {Array.isArray(item.color) ? item.color[0] : item.color}
-                    </p>
+                    <p className="sizes m-0 d-flex gap-1" style={{alignItems:"baseline"}}>
+                            Color:{" "}
+                            {(() => {
+                              const colorCode = Array.isArray(item.color) ? item.color[0] : item.color;
+                              return (
+                                <span
+                                  style={{
+                                    // display: "inline-block",
+                                    width: "20px",
+                                    height: "20px",
+                                    backgroundColor: colorCode,
+                                    paddingTop: "5px",
+                                    // border: `1px solid colorCode,
+                                    borderRadius: "4px",
+                                  }}
+                                  title={colorCode}
+                                />
+                              );
+                            })()}
+                          </p>
                   )}
                 </div>
                 <RiDeleteBin5Fill
@@ -119,42 +135,51 @@ export default function SmallForm() {
       {/* Only one form should wrap the coupon input and summary */}
       <form className="border p-4 shadow-sm rounded" onSubmit={handleSubmit}>
         <div className="mb-3 d-flex space_between">
-          <label htmlFor="subtotal" className="form-label mb-0 fw-bold">
+          <label htmlFor="subtotal" className="form-label mb-0">
             Subtotal
           </label>
           <div className="d-flex gap-1">
             {discountAmount > 0 && (
               <span style={{ textDecoration: "line-through" }}>
                 {currency?.sign}
-                {discountAmount.toFixed(2)}
+                {Number(discountAmount).toLocaleString('de-DE', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </span>
             )}
             <span id="subtotal">
-              {" "}
-              {/* {currency?.sign} */}
-              {subtotal}
+              {currency?.sign}
+              {Number(subtotal).toLocaleString('de-DE', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </span>
           </div>
         </div>
         <div className="mb-3 d-flex space_between">
-          <label htmlFor="subtotal" className="form-label mb-0 fw-bold">
+          <label htmlFor="subtotal" className="form-label mb-0">
             VAT 22%
           </label>
           <span id="subtotal">
             {currency?.sign}
-            {(subtotal * 0.22).toFixed(2)}
+            {/* {(subtotal * 0.22).toFixed(2)} */}
+            {(Number(subtotal) * 0.22).toLocaleString('de-DE', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </span>
         </div>
 
         <div className="mb-3 d-flex space_between pb-3">
           <label
             htmlFor="deliveryCharges"
-            className="form-label mb-0 fw-bold"
+            className="form-label mb-0 "
             id="delivery"
           >
             Delivery Charges
           </label>
-          <span id="delivery">
+          <span id="subtotal">
             {currency?.sign}
             {deliveryFee.toFixed(2)}
           </span>
@@ -172,11 +197,12 @@ export default function SmallForm() {
         <p
           style={{
             textAlign: "left",
-            color: "#000",
             textDecoration: "underline",
             cursor: "pointer",
+            fontSize:"16px",
+            fontWeight:"400"
           }}
-          className="my-1"
+          className="my-1 " id="subtotal"
           onClick={handleToggleDiscountInput}
         >
           have a coupon code?
@@ -208,12 +234,16 @@ export default function SmallForm() {
         )}
 
         <div className="d-flex space_between">
-          <label htmlFor="grandTotal" className="form-label mb-0 fw-bold">
+          <label htmlFor="grandTotal" className="form-label mb-0">
             Grand Total
           </label>
-          <span id="grandTotal" className="fw-bold">
+          <span id="grandTotal" className="">
             {currency?.sign}
-            {(Number(subtotal * 0.22) + Number(grandTotal)).toFixed(2)}
+            {/* {(Number(subtotal * 0.22) + Number(grandTotal))} */}
+            {(Number(subtotal * 0.22) + Number(grandTotal)).toLocaleString('de-DE', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </span>
         </div>
       </form>

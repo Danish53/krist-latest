@@ -22,12 +22,12 @@ export default function AllProduct() {
   const { addToCart, products, loading, currency } =
     useContext(ResponseContext);
     const [searchedProducts, setSearchedProducts] = useState([]);
-  console.log(searchedProducts, 'search productsss...')
+  // console.log(searchedProducts, 'search productsss...')
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchQuerys = searchParams.get("search");
   console.log(searchQuerys, "sssss")
-  const category = searchParams.get("category");
+  const category = searchParams.get("category_name");
   const subcategory = searchParams.get("subcategory");
 
   const [productss, setProducts] = useState([]);
@@ -133,6 +133,7 @@ useEffect(() => {
   } else {
     setProducts(products); // context default
     setSearchedProducts([]);
+    // router.push("?category_name=Electronic");
   }
 }, [searchQuerys, category, subcategory]);
 
@@ -276,12 +277,19 @@ const displayProducts =
                   <p className="detail">{product.category_name}</p>
                   <div className="price_div">
                     <p className="price">
-                      {currency?.sign}
-                      {product.current_price}
+                      {/* {currency?.sign} */}
+                      {/* {product.current_price} */}
+                      {product?.current_price?.toLocaleString("de-DE", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                     </p>
                     <p className="old_price">
                       {product?.previous_price
-                        ? `${currency?.sign}${product.previous_price}`
+                        ? `${product?.previous_price?.toLocaleString("de-DE", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}`
                         : ""}
                     </p>
                   </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Footer2 from "@/components/footers/Footer2";
 import Header2 from "@/components/headers/Header2";
 import MyProfile from "../../../../components/MyProfile/profile";
@@ -8,9 +8,13 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { ResponseContext } from "@/app/login/ResponseContext";
 
 export default function Page() {
   const { id } = useParams();
+  const {
+    currency,
+  } = useContext(ResponseContext);
 
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -132,8 +136,19 @@ export default function Page() {
                 </div>
                 <div>
                   <h6>Payment Information</h6>
-                  <p>Payment Status: {orderDetails?.payment_status}</p>
-                  <p>Tax: {orderDetails?.tax}</p>
+                  <div className="d-flex justify-content-center align-items-center">
+                    <p>Payment Status:
+                    </p>
+                    <span className={`badge ${orderDetails?.payment_status === "paid"
+                      ? "bg-success"
+                      : orderDetails?.payment_status === "pending"
+                        ? "bg-warning text-dark"
+                        : "bg-danger"
+                      }  ms-2`}>
+                      {orderDetails?.payment_status}
+                    </span>
+                  </div>
+                  <p>Tax: {currency?.sign}{orderDetails?.tax}</p>
                   <p>Paid Amount: {orderDetails?.total}</p>
                   {/* <p>Payment Method: {orderDetails?.payment_method}</p>
                   <p>Transaction ID: {orderDetails?.transaction_id}</p> */}
@@ -144,7 +159,7 @@ export default function Page() {
                 <table className="w-full border border-gray-300 text-sm sm:text-base">
                   <thead className="bg-gray-100">
                     <tr>
-                      <th className="p-2 text-left">ID#</th>
+                      {/* <th className="p-2 text-left">ID#</th> */}
                       <th className="p-2 text-left">Image</th>
                       <th className="p-2 text-left">Name</th>
                       <th className="p-2 text-left">Detail</th>
@@ -162,7 +177,7 @@ export default function Page() {
 
                           return (
                             <tr key={key} className="border-t">
-                              <td className="p-2">{productInfo?.id}</td>
+                              {/* <td className="p-2">{productInfo?.id}</td> */}
                               <td className="p-2">
                                 <img
                                   src={productInfo?.photo}
@@ -173,11 +188,25 @@ export default function Page() {
                               </td>
                               <td className="p-2">{productInfo?.name}</td>
                               <td className="p-2">Quantity: {quantity}</td>
-                              <td className="p-2">{productInfo?.price}</td>
+                              {/* <td className="p-2">{currency?.sign}{productInfo?.price}</td> */}
                               <td className="p-2">
+                                {currency?.sign}
+                                {Number(productInfo?.price).toLocaleString('de-DE', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                                })}
+                              </td>
+                              <td className="p-2">
+                                {/* {currency?.sign}{(
+                                  parseFloat(productInfo?.price || 0) * quantity
+                                )} */}
                                 {(
                                   parseFloat(productInfo?.price || 0) * quantity
-                                ).toFixed(2)}
+                                ).toLocaleString('de-DE', {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                                })} {currency?.sign}
+
                               </td>
                             </tr>
                           );

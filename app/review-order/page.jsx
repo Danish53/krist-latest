@@ -44,22 +44,40 @@ export default function ReviewOrder() {
   //   );
   // };
 
-  const getTotalAmount = () => {
-    const total =
-      cart?.reduce((sum, item) => {
-        const priceStr = item.current_price
-          .replace("€", "")
-          .replace(".", "")
-          .replace(",", ".");
-        const price = parseFloat(priceStr);
-        return sum + price * item.quantity;
-      }, 0) || 0;
+  // const getTotalAmount = () => {
+  //   const total =
+  //     cart?.reduce((sum, item) => {
+  //       const priceStr = item.current_price
+  //         .replace("€", "")
+  //         .replace(".", "")
+  //         .replace(",", ".");
+  //       const price = parseFloat(priceStr);
+  //       return sum + price * item.quantity;
+  //     }, 0) || 0;
 
-    return new Intl.NumberFormat("it-IT", {
-      style: "currency",
-      currency: "EUR",
-    }).format(total);
-  };
+  //   return new Intl.NumberFormat("it-IT", {
+  //     style: "currency",
+  //     currency: "EUR",
+  //   }).format(total);
+  // };
+  const getTotalAmount = () => {
+  const total =
+    cart?.reduce((sum, item) => {
+      const priceStr = item.current_price
+        .replace("€", "")
+        .replace(/\./g, "")    // Remove thousands
+        .replace(",", ".");    // Convert decimal to dot for JS parsing
+
+      const price = parseFloat(priceStr);
+      return sum + (isNaN(price) ? 0 : price * item.quantity);
+    }, 0) || 0;
+
+  return new Intl.NumberFormat("de-DE", {
+    style: "currency",
+    currency: "EUR",
+  }).format(total);
+};
+
 
   const subtotal = parseFloat(getTotalAmount());
   const deliveryFee = Number(setting?.shipping_cost || 0);
@@ -312,8 +330,8 @@ export default function ReviewOrder() {
       const data = await response.json();
 
       if (response.ok && data?.data) {
-        console.log("After the data fetched");
-        console.log(data, "checouttt,,t,t,t,t");
+        // console.log("After the data fetched");
+        // console.log(data, "checouttt,,t,t,t,t");
         router.push(data.data);
       } else {
         console.log("Error while the data fetched");
@@ -356,7 +374,7 @@ export default function ReviewOrder() {
             <p onClick={handleBack} style={{ cursor: "pointer" }}>
               <span>&lt;</span> Back
             </p>
-            <div className="col-lg-8">
+            <div className="col-lg-12">
               <div className="icons_parent_div mb-3">
                 <div className="icons_div mt-3 mb-5">
                   <div className="icon active">
@@ -404,11 +422,25 @@ export default function ReviewOrder() {
                         )}
 
                         {item?.color && item?.color.length > 0 && (
-                          <p className="sizes">
+                          <p className="sizes m-0 d-flex gap-1" style={{alignItems:"baseline"}}>
                             Color:{" "}
-                            {Array.isArray(item.color)
-                              ? item.color[0]
-                              : item.color}
+                            {(() => {
+                              const colorCode = Array.isArray(item.color) ? item.color[0] : item.color;
+                              return (
+                                <span
+                                  style={{
+                                    // display: "inline-block",
+                                    width: "20px",
+                                    height: "20px",
+                                    backgroundColor: colorCode,
+                                    paddingTop: "5px",
+                                    // border: `1px solid colorCode,
+                                    borderRadius: "4px",
+                                  }}
+                                  title={colorCode}
+                                />
+                              );
+                            })()}
                           </p>
                         )}
                       </div>
@@ -460,9 +492,9 @@ export default function ReviewOrder() {
                 </button>
               </form>
             </div>
-            <div className="col-lg-4">
+            {/* <div className="col-lg-4">
               <SmallForm />
-            </div>
+            </div> */}
           </div>
         </div>
         <Footer2 />

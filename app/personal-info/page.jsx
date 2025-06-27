@@ -170,7 +170,7 @@ export default function Page() {
             <div className="row">
               <div className="col-lg-12">
                 <div className="first_flex_div mt-5">
-                  <div className="img_div">
+                  {/* <div className="img_div">
                     <img src={previewphoto} alt="Profile Preview" />
                     <label className="edit_icon">
                       <FaRegEdit />
@@ -181,7 +181,7 @@ export default function Page() {
                         style={{ display: "none" }}
                       />
                     </label>
-                  </div>
+                  </div> */}
                 </div>
 
                 <form

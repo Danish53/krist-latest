@@ -33,7 +33,7 @@ export default function Nav() {
       </li>
 
       <li className="has-dd-menu">
-        <Link href={`/all-products`} role="button" aria-haspopup="true">
+        <Link href={`/all-products?category_name=Electronic`} role="button" aria-haspopup="true">
           Shop
           <span
             data-uc-navbar-parent-icon=""
@@ -68,7 +68,7 @@ export default function Nav() {
                   <ul className="uc-nav uc-navbar-dropdown-nav">
                     <li className="uc-nav-header">
                       <Link
-                        href={`/all-products?category=${encodeURIComponent(
+                        href={`/all-products?category_name=${encodeURIComponent(
                           category.name
                         )}`}
                       >

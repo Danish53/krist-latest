@@ -209,21 +209,21 @@ export default function Promotions() {
           <div className="popular_products2 pb-3">
             {loading
               ? [...Array(4)].map((_, index) => (
-                  <div className="single_card2 skeleton" key={index}>
-                    <div className="img_div skeleton-box" />
-                    <p className="skeleton-line mt-2" />
-                    <div className="review_div">
-                      <div className="div_1">
-                        <p className="skeleton-line" style={{ width: "60%" }} />
-                      </div>
-                      <div className="price_div">
-                        <p className="skeleton-line" style={{ width: "40%" }} />
-                      </div>
+                <div className="single_card2 skeleton" key={index}>
+                  <div className="img_div skeleton-box" />
+                  <p className="skeleton-line mt-2" />
+                  <div className="review_div">
+                    <div className="div_1">
+                      <p className="skeleton-line" style={{ width: "60%" }} />
+                    </div>
+                    <div className="price_div">
+                      <p className="skeleton-line" style={{ width: "40%" }} />
                     </div>
                   </div>
-                ))
+                </div>
+              ))
               : procCat?.length > 0
-              ? procCat.map((product, index) => (
+                ? procCat.map((product, index) => (
                   <div className="single_card2" key={index}>
                     <div
                       className="img_div"
@@ -243,15 +243,19 @@ export default function Promotions() {
                       <div className="price_div">
                         <p>
                           <strong>
-                            {currency?.sign}
-                            {product?.current_price}
+                            {/* {currency?.sign} */}
+                            {/* {product?.current_price} */}
+                            {product?.current_price?.toLocaleString("de-DE", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
                           </strong>
                         </p>
                       </div>
                     </div>
                   </div>
                 ))
-              : ""}
+                : ""}
           </div>
         </div>
       </section>
