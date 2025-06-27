@@ -9,7 +9,6 @@ export const ResponseContext = createContext();
 export const ResponseProvider = ({ children }) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const [cart, setCart] = useState([]);
-  console.log("i am console..");
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -425,7 +424,7 @@ export const ResponseProvider = ({ children }) => {
   const Currency = async () => {
     try {
       const response = await fetch(
-        `${baseUrl}api/front/system-currency`, // Parameters in URL",
+        `${baseUrl}api/front/system-currency`, 
         {
           method: "GET",
           headers: {
