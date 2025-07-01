@@ -120,12 +120,12 @@ export default function SmallForm() {
                           </p>
                   )}
                 </div>
-                <RiDeleteBin5Fill
+                {/* <RiDeleteBin5Fill
                   className="icon_prop"
                   onClick={() =>
                     removeFromCart(item?.id, item?.color, item?.size)
                   }
-                />
+                /> */}
               </div>
             </div>
           </div>

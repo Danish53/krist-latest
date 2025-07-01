@@ -222,7 +222,7 @@ export default function Header2() {
                     ref={dropdownRef}
                   >
                     {isLoggedIn ? (
-                      <p className="account-label">My Account</p>
+                      <p className="account-label hidden_account">My Account</p>
                     ) : (
                       <Link className="text-none fw-medium" href={`/login`}>
                         <p className="account-label">Login</p>
@@ -236,7 +236,7 @@ export default function Header2() {
                         <Link href="/orders">Orders</Link>
                         <Link href="/my-wishlist">Wishlist</Link>
                         <Link href="/my-address">Addresses</Link>
-                        <Link href="/settings">Settings</Link>
+                        {/* <Link href="/settings">Settings</Link> */}
                         <Link href="/login" onClick={handleAuth}>
                           Logout
                         </Link>

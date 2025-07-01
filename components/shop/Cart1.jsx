@@ -338,24 +338,28 @@ export default function Cart1() {
 
                     <tr className="tr_row ft-tertiary">
                       <td colSpan="2" className="checkout_td text-center">
-                        <button
-                          className="w-100 check_out_btn"
-                          onClick={handleNavigate}
-                          disabled={loading}
-                        >
-                          {loading ? (
-                            <>
-                              <span
-                                className="spinner-border spinner-border-sm me-2"
-                                role="status"
-                                aria-hidden="true"
-                              ></span>
-                              Proceed to checkout...
-                            </>
-                          ) : (
-                            "Proceed to checkout"
-                          )}
-                        </button>
+
+                        {cart.length > 0 && (
+                          <button
+                            className="w-100 check_out_btn"
+                            onClick={handleNavigate}
+                            disabled={loading}
+                          >
+                            {loading ? (
+                              <>
+                                <span
+                                  className="spinner-border spinner-border-sm me-2"
+                                  role="status"
+                                  aria-hidden="true"
+                                ></span>
+                                Proceed to checkout...
+                              </>
+                            ) : (
+                              "Proceed to checkout"
+                            )}
+                          </button>
+                        )
+                        }
                       </td>
                     </tr>
                   </tbody>

@@ -31,8 +31,10 @@ export default function MobileMenu() {
   const handleAuth = () => {
     if (isLoggedIn) {
       localStorage.removeItem("token");
+      sessionStorage.clear();
+      localStorage.clear();
       setIsLoggedIn(false);
-      toast.success('User Logout Successfully!')
+      toast.success("User Logout Successfully!");
     }
   };
 
@@ -178,8 +180,15 @@ export default function MobileMenu() {
                   )}
                 </li>
               ))}
-              <li onClick={handleAuth}>
-                <Link href={`/login`} >{isLoggedIn ? "Logout" : "Login"}</Link>
+              <li >
+                {/* <Link href={`/login`} >{isLoggedIn ? "Logout" : "Login"}</Link> */}
+                {
+                  isLoggedIn ? (
+                    <Link href={`/dashboard`} >My Account</Link>
+                  ) : (
+                    <Link onClick={handleAuth} href={`/login`} >Login</Link>
+                  )
+                }
               </li>
             </ul>
           ) : (

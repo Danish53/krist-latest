@@ -10,22 +10,27 @@
   align-items: center;
   gap: 14px;
 }
+
 .uc-navbar-nav {
   display: flex;
   justify-content: center;
 }
+
 .uc-navbar-nav li {
   margin: 0 24px;
 }
+
 .uc-navbar-right {
   margin-left: 0 !important;
   width: 70%;
 }
+
 @media (max-width: 600px) {
   .icon_div_main {
     margin-right: 18px;
   }
 }
+
 .img_div {
   position: relative;
   cursor: pointer;
@@ -59,15 +64,18 @@
   transition: visibility 0.3s ease-in-out;
   z-index: 999;
 }
+
 .show_popup {
   visibility: visible !important;
 }
+
 .icons {
   display: flex;
   align-items: center;
   gap: 20px;
   position: relative;
 }
+
 .icons .search_div {
   position: absolute;
   top: 53px;
@@ -75,20 +83,24 @@
   visibility: hidden;
   transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
+
 .active {
   visibility: visible !important;
 }
+
 .icons .search_input {
   outline: none !important;
   padding: 2px 3px;
   border-radius: 5px;
   /* max-width: 100px; */
 }
+
 .icon_size {
   height: 25px;
   width: 25px;
   cursor: pointer;
 }
+
 img.icon_size {
   /* margin-left: 20px; */
 }
@@ -98,6 +110,7 @@ img.icon_size {
     margin-left: 8px;
   }
 }
+
 .btn_black {
   background-color: black;
   color: white;
@@ -110,9 +123,11 @@ img.icon_size {
   align-items: center;
   border-radius: 7px;
 }
+
 .nav_main_width {
   width: 100%;
 }
+
 .increase_width_left {
   /* width: 30%; */
   justify-content: space-between;
@@ -138,7 +153,8 @@ img.icon_size {
 }
 
 .search_div.active {
-  width: 250px; /* Expanded width */
+  width: 250px;
+  /* Expanded width */
   box-shadow: 0 0 8px rgba(30, 42, 54, 0.4);
 }
 
@@ -198,42 +214,49 @@ img.icon_size {
   background-color: #ff7171;
   animation-delay: 0s;
 }
+
 .dot2 {
   top: 14.64%;
   left: 85.36%;
   background-color: #377b37;
   animation-delay: 0.25s;
 }
+
 .dot3 {
   top: 50%;
   left: 100%;
   background-color: #afaf29;
   animation-delay: 0.5s;
 }
+
 .dot4 {
   top: 85.36%;
   left: 85.36%;
   background-color: #7a5afb;
   animation-delay: 0.75s;
 }
+
 .dot5 {
   top: 100%;
   left: 50%;
   background-color: #e62575;
   animation-delay: 1s;
 }
+
 .dot6 {
   top: 85.36%;
   left: 14.64%;
   background-color: #967e77;
   animation-delay: 1.25s;
 }
+
 .dot7 {
   top: 50%;
   left: 0;
   background-color: #d432c7;
   animation-delay: 1.5s;
 }
+
 .dot8 {
   top: 14.64%;
   left: 14.64%;
@@ -246,12 +269,21 @@ img.icon_size {
     transform: scale(1);
     opacity: 1;
   }
+
   50% {
     transform: scale(1.5);
     opacity: 0.7;
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .hidden_account {
+    display: none;
   }
 }

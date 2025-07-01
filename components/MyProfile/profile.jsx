@@ -107,14 +107,13 @@ export default function profile() {
             <IoIosNotificationsOutline />
             <p onClick={handleNotifications}>Notifications</p>
           </div> */}
-          <div
+          {/* <div
             className={`user flex_props ${
               pathname === "/settings" ? "bottom_border" : ""
             }`}
           >
-            {/* <CiSettings /> */}
             <p onClick={handleSetting}>Settings</p>
-          </div>
+          </div> */} 
         </div>
       </section>
     </>

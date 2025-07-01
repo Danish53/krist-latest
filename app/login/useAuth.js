@@ -7,7 +7,7 @@ const useAuth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
-  const { setResponse_Context } = useContext(ResponseContext);
+  const { setResponse_Context, setIsLoggedIn } = useContext(ResponseContext);
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -31,8 +31,10 @@ const useAuth = () => {
       }
 
       if (data.status === true) {
-        toast.success("User Registered Successfully!");
-        router.push("/login");
+        // toast.success("User Registered Successfully!");
+        // router.push("/login");
+        toast.success("Otp send Successfully!");
+        router.push("/register-otp");
         return data;
       } else {
         throw new Error(data?.error?.email || "Registration failed.");
@@ -74,6 +76,8 @@ const useAuth = () => {
 
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("userId", data.data.user.id);
+        
+        setIsLoggedIn(true);
         toast.success("Login Successful!");
         router.push("/"); // Redirect to the website
         return data;

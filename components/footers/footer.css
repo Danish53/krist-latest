@@ -110,7 +110,7 @@
   color: white;
   gap: 20px;
   display: flex;
-  align-items: center;
+  align-items: start;
   flex-wrap: wrap;
 }
 #footer .bottom_foter .icon_div .social_icon_size {

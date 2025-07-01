@@ -161,14 +161,14 @@ export const ResponseProvider = ({ children }) => {
       );
 
       const data = await response.json();
-      console.log(data, "add wishlist");
+      // console.log(data, "add wishlist");
 
       if (data.status) {
         const updatedWishlist = [...wishlist, data.data.product];
         setWishlist(updatedWishlist);
-        setAnimateWishlist(true);
+        // setAnimateWishlist(true);
         localStorage.setItem("wishlist", JSON.stringify(updatedWishlist)); // Save to localStorage
-        // toast.success("Added to wishlist!");
+        toast.success("Added to wishlist!");
       }
     } catch (error) {
       console.error("Error adding to wishlist:", error);
@@ -200,9 +200,9 @@ export const ResponseProvider = ({ children }) => {
           (item) => item.id !== productId
         );
         setWishlist(updatedWishlist);
-        setAnimateWishlist(true);
+        // setAnimateWishlist(true);
         localStorage.setItem("wishlist", JSON.stringify(updatedWishlist)); // Update localStorage
-        // toast.success("Removed from wishlist!");
+        toast.success("Removed from wishlist!");
       }
     } catch (error) {
       console.error("Error removing from wishlist:", error);
@@ -485,6 +485,10 @@ export const ResponseProvider = ({ children }) => {
   });
   // console.log(formDataCheckout, "in context page...,.,,,")
 
+
+  // auth
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <ResponseContext.Provider
       value={{
@@ -532,6 +536,8 @@ export const ResponseProvider = ({ children }) => {
         setFormDataCheckout,
         stripekey,
         currency,
+        isLoggedIn,
+        setIsLoggedIn
       }}
     >
       {children}
