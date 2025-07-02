@@ -274,13 +274,13 @@ export default function Page() {
                       {paginatedOrders.map((order) => (
                         <tr key={order.id} className="border-t">
                           <td className="p-2">{order?.number}</td>
-                          <td className="p-2">
+                          <td className="p-2" style={{ whiteSpace: "nowrap" }}>
                             {formatDate(order?.created_at)}
                           </td>
                           <td className="p-2">{order?.total}</td>
                           <td className="p-2">
                             <span
-                              className={`px-2 rounded text-white ${
+                              className={`rounded text-white badge ${
                                 order?.status === "Completed"
                                   ? "bg-green-500"
                                   : "bg-yellow-500"
@@ -289,9 +289,9 @@ export default function Page() {
                               {order?.status}
                             </span>
                           </td>
-                          <td className="p-2">
+                          <td className="p-2" colSpan={4}>
                             <Link href={`/orders/orderDetail/${order?.id}`}>
-                              <button className="btn btn-dark">View Order</button>
+                              <button className="btn text-nowrap btn-dark">View Order</button>
                             </Link>
                           </td>
                         </tr>

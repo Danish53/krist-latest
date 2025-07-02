@@ -291,7 +291,7 @@ export default function Page() {
   const { updateProfile, loading } = useAuth();
 
   const user = response_Context?.user || {};
-  const { email = "", full_name = "", address = "", propic = "" } = user;
+  const { email = "", full_name = "", password = "", propic = "" } = user;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -310,14 +310,14 @@ export default function Page() {
     first_name: "",
     last_name: "",
     email: "",
-    address: "",
+    password: "",
     photo: "",
     user_id: null,
   });
 
   useEffect(() => {
     const email = response_Context?.user?.email;
-    const address = response_Context?.user?.address;
+    const password = "";
     const fullName = response_Context?.user?.full_name;
 
     setFormData((prev) => {
@@ -333,14 +333,14 @@ export default function Page() {
       return {
         ...prev,
         email: email || prev.email,
-        address: address || prev.address,
+        password: password || prev.password,
         first_name,
         last_name,
       };
     });
   }, [
     response_Context?.user?.email,
-    response_Context?.user?.address,
+    response_Context?.user?.password,
     response_Context?.user?.full_name,
   ]);
 
@@ -352,13 +352,13 @@ export default function Page() {
         first_name: firstName,
         last_name: lastName,
         email: email,
-        address: address,
+        password: password,
         photo: propic,
         user_id: userId,
       });
       setPreviewphoto(propic || "/assets/images/common/persona_img.png");
     }
-  }, [loadingUserData, email, address, propic, userId]);
+  }, [loadingUserData, email, password, propic, userId]);
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -395,7 +395,7 @@ export default function Page() {
     formDataToSend.append("first_name", formData.first_name || "");
     formDataToSend.append("last_name", formData.last_name || "");
     formDataToSend.append("email", formData.email || "");
-    formDataToSend.append("address", formData.address || "");
+    formDataToSend.append("password", formData.password || "");
     formDataToSend.append("user_id", userId);
 
     if (formData.photo instanceof File) {
@@ -483,13 +483,13 @@ export default function Page() {
                   />
                 </div>
                 <div className="col-md-6">
-                  <label htmlFor="address">Address</label>
+                  <label htmlFor="password">Password</label>
                   <input
                     type="text"
                     className="form-control"
-                    name="address"
-                    placeholder="Address"
-                    value={formData.address}
+                    name="password"
+                    placeholder="Password"
+                    value={formData.password}
                     onChange={handleChange}
                   />
                 </div>

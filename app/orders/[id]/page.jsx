@@ -167,7 +167,7 @@ export default function InvoicePage() {
           <section className=" px-2">
             <div>
               <div className="d-flex gap-1 w-100">
-                <div style={{ width: "25%" }}>
+                <div style={{ width: "25%" }} className="w_inc">
                   <p>Invoice No</p>
                   <h6
                     className="p-1 w-100"
@@ -176,7 +176,7 @@ export default function InvoicePage() {
                     {orderDetails?.number}
                   </h6>
                 </div>
-                <div style={{ width: "25%" }}>
+                <div style={{ width: "25%" }}  className="w_inc">
                   <p>Date</p>
                   <h6
                     className="p-1 w-100"
@@ -308,7 +308,7 @@ export default function InvoicePage() {
                                 <p>Packing</p>
                                 <h6 className='p-1 w-100' style={{ backgroundColor: "#f2f2f2" }}>€0.00</h6>
                             </div> */}
-              <div style={{ width: "15%" }}>
+              {/* <div style={{ width: "15%" }}>
                 <p>Total Discount</p>
                 <h6
                   className="p-1 w-100"
@@ -316,7 +316,7 @@ export default function InvoicePage() {
                 >
                   €0.00
                 </h6>
-              </div>
+              </div> */}
               {/* <div style={{ width: "15%" }}>
                 <p>Payment Fees</p>
                 <h6
@@ -326,7 +326,7 @@ export default function InvoicePage() {
                   €0.00
                 </h6>
               </div> */}
-              <div style={{ width: "15%" }}>
+              <div style={{ width: "15%" }}  className="w_inc">
                 <p>Product Total</p>
                 <h6
                   className="p-1 w-100"
@@ -338,13 +338,13 @@ export default function InvoicePage() {
                   })}
                 </h6>
               </div>
-              <div style={{ width: "15%" }}>
+              <div style={{ width: "15%" }} className="w_inc">
                 <p>VAT</p>
                 <h6
                   className="p-1 w-100"
                   style={{ backgroundColor: "#f2f2f2" }}
                 >
-                  €0.00
+                  {orderDetails?.vat_number}
                 </h6>
               </div>
             </div>

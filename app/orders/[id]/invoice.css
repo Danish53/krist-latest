@@ -1,18 +1,18 @@
-.container {
+/* .container {
     max-width: 60%;
-    margin: 30px auto;
+    margin: 0px auto;
     font-family: Arial, sans-serif;
     background: #fff;
     padding: 40px;
     color: #000;
-    /* border: 1px solid #ccc; */
-}
+    border: 1px solid #ccc;
+} */
 
 @media (max-width:768px) {
-    .container {
+    /* .container {
         max-width: 100%;
         padding: 5px;
-    }
+    } */
 
     .recipient {
         text-align: center;
@@ -21,6 +21,9 @@
 
     .company-info {
         gap: 10px;
+    }
+    .w_inc{
+        width: 50% !important;
     }
 }
 

@@ -111,7 +111,7 @@ export default function Footer2() {
                   <MdOutlineEmail className="icon_size" />
                 </div>
                 <div className="text_div">
-                  <p>{setting?.from_email}</p>
+                  <p>{setting?.from_email ? setting?.from_email : "techifort@gmail.com"}</p>
                 </div>
               </div>
 

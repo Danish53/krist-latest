@@ -176,8 +176,41 @@
   color: white;
 }
 
-@media screen and (max-width: 850px) {
+@media (max-width: 850px) {
   .margin_top {
-    margin-top: 50px !important;
+    margin-top: 80px !important;
   }
+}
+
+/* .container{
+      max-width: 85% !important;
+      margin: 0px auto !important;
+      background: transparent !important;
+} */
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: -100%; /* ✅ was right: -100% */
+  width: 80%;
+  max-width: 300px;
+  height: 100%;
+  background: #fff;
+  z-index: 1050;
+  transition: left 0.3s ease; /* ✅ was right */
+  overflow-y: auto;
+}
+
+.mobile-drawer.open {
+  left: 0; /* ✅ open from left */
+}
+
+.drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1040;
+  background-color: rgba(0, 0, 0, 0.5);
 }
